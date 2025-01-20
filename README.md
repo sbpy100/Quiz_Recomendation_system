@@ -23,11 +23,6 @@ To run this project, ensure that you have the following installed:
 - **Required Packages**: Use the following command to install the necessary libraries:
 
   ```bash
-  pip install pandas numpy scikit-learn matplotlib seaborn
-  # Steps Used in the Code
-  ## 1. Data Preprocessing
-  The preprocess_data function is used to clean and prepare the data for analysis.
-  ### Key Actions:
-ID Cleaning: Removes extra spaces and converts both Quiz ID and User ID to lowercase.
+
 
   
