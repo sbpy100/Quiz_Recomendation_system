@@ -4,7 +4,7 @@ This project provides a Python-based solution to analyze quiz performance and ge
 
 ## Project Structure
 1 Data Preprocessing: Clean and transform the raw data..<br>
-2.Performance Analysis: Aggregate performance data to derive meaningful metrics.
+2.Performance Analysis: Aggregate performance data to derive meaningful metrics..<br>
 3.Clustering: Group data using K-Means clustering.<br>
 4.Weakness and Strength Analysis: Identify areas of improvement and strengths..<br>
 5.Recommendation Generation: Provide personalized suggestions based on weaknesses..<br>
@@ -12,13 +12,13 @@ This project provides a Python-based solution to analyze quiz performance and ge
 ## Prerequisites
 To run this project, ensure that you have the following installed:
 Python (preferably version 3.7 or higher)
-Required Packages: Use the following command to install the necessary libraries:.<br>
----
+Required Packages: Use the following command to install the necessary libraries;
+
 bash
 Copy
 Edit
 pip install pandas numpy scikit-learn matplotlib seaborn.---
-
+---
 Datasets: Ensure you have the following CSV files:
 history.csv: Historical quiz performance data.
 current.csv: Most recent quiz performance data.
