@@ -12,11 +12,13 @@ This project provides a Python-based solution to analyze quiz performance and ge
 ## Prerequisites
 To run this project, ensure that you have the following installed:
 Python (preferably version 3.7 or higher)
-Required Packages: Use the following command to install the necessary libraries:
+Required Packages: Use the following command to install the necessary libraries:.<br>
+---
 bash
 Copy
 Edit
-pip install pandas numpy scikit-learn matplotlib seaborn
+pip install pandas numpy scikit-learn matplotlib seaborn.<br>
+---
 Datasets: Ensure you have the following CSV files:
 history.csv: Historical quiz performance data.
 current.csv: Most recent quiz performance data.
