@@ -9,9 +9,8 @@ This project provides a Python-based solution to analyze quiz performance and ge
 4.Weakness and Strength Analysis: Identify areas of improvement and strengths..<br>
 5.Recommendation Generation: Provide personalized suggestions based on weaknesses..<br>
 6.Visualization: Visual representation of student performance through radar charts..<br>
-Prerequisites
+## Prerequisites
 To run this project, ensure that you have the following installed:
-
 Python (preferably version 3.7 or higher)
 Required Packages: Use the following command to install the necessary libraries:
 bash
