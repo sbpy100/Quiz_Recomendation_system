@@ -17,8 +17,8 @@ Required Packages: Use the following command to install the necessary libraries:
 bash
 Copy
 Edit
-pip install pandas numpy scikit-learn matplotlib seaborn.<br>
----
+pip install pandas numpy scikit-learn matplotlib seaborn.---
+
 Datasets: Ensure you have the following CSV files:
 history.csv: Historical quiz performance data.
 current.csv: Most recent quiz performance data.
