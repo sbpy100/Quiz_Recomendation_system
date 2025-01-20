@@ -3,7 +3,7 @@
 This project provides a Python-based solution to analyze quiz performance and generate personalized recommendations for students to improve their preparation. By processing historical and current quiz data, this system helps identify areas of strength and weakness, offering actionable steps for improvement.
 
 ## Project Structure
-1 Data Preprocessing: Clean and transform the raw data.
+1 Data Preprocessing: Clean and transform the raw data..<br>
 2.Performance Analysis: Aggregate performance data to derive meaningful metrics.
 3.Clustering: Group data using K-Means clustering.<br>
 4.Weakness and Strength Analysis: Identify areas of improvement and strengths..<br>
