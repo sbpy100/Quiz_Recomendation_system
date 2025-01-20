@@ -1,46 +1,128 @@
-README for Quiz Performance Analysis
-This project analyzes quiz performance data to provide insights on users' strengths and weaknesses in various topics. The code performs data preprocessing, feature engineering, clustering, and recommendation generation. It processes two datasets—historical and current performance data—and outputs cleaned data in new CSV files.
+Personalized Student Recommendations for Quiz Preparation
+Overview
+This Python-based solution analyzes quiz performance data and generates personalized recommendations to help students improve their preparation for exams. The system processes both historical and current quiz data, highlights weaknesses, and provides actionable steps for improvement.
 
-Steps in the Code
-Step 1: Data Preprocessing
-Goal: Clean and standardize the dataset by:
-Stripping any leading or trailing whitespace from Quiz ID and User ID.
-Converting the Topic column to lowercase for consistency.
-Handling multiple concatenated topics by splitting them (e.g., "Math and Science" → ["Math", "Science"]).
-Assigning an index to each unique topic for consistent reference across both datasets.
-Converting Score and Accuracy columns from percentage strings (e.g., "90%") to numeric values for easier processing.
-Step 2: Loading Data
-Datasets:
-history.csv: Contains historical quiz performance data.
-current.csv: Contains current quiz performance data.
-Preprocessing: Both datasets are processed using the preprocess_data() function to clean and standardize them before analysis.
-Step 3: Handling Missing Values
-Removal of NaN Values: Any rows with NaN values in the Score or Accuracy columns are dropped from both datasets to ensure that only complete data is used for analysis.
-Step 4: Feature Engineering
-Historical Data: The mean of Score and Accuracy is calculated for each topic to summarize historical performance.
-Current Data: The sum of Correct Answers and Total Questions is used to calculate Accuracy_current for each topic, representing the current state of quiz performance.
-The historical and current data are merged into a single DataFrame for further analysis.
-Step 5: Data Normalization
-Standardization: The StandardScaler is used to scale the performance data (Score, Accuracy_history, Accuracy_current, and Topic_index) to have a mean of 0 and standard deviation of 1. This normalization is crucial for clustering algorithms, as they are sensitive to the scale of input data.
-Step 6: Handling Missing Data After Scaling
-Imputation: Any missing values in the scaled data are filled using the SimpleImputer class with the mean strategy. This ensures there are no NaN values before clustering.
-Step 7: K-Means Clustering
-Clustering: The KMeans algorithm is applied to the normalized data to group quiz topics into clusters. These clusters help identify patterns in quiz performance, such as groups of topics with similar performance metrics.
-Step 8: Identifying Weak and Strong Topics
-Weak Topics: Topics with low Accuracy_current (< 0.5) or low Score (< 0.5) are identified as weak. These topics may need further focus and improvement.
-Strong Topics: Topics with high Accuracy_current (> 0.8) and high Score (> 0.8) are considered strong. These topics indicate areas where users are performing well.
-Step 9: Generating Recommendations
-Weak Topics: Topics identified as weak (based on the criteria above) are recommended for improvement. These topics are extracted from the clusters and displayed for further review.
-Step 10: Saving Processed Data
-The cleaned and processed data is saved to new CSV files:
-processed_history.csv: Contains the cleaned historical performance data.
-processed_current.csv: Contains the cleaned current performance data.
-These files can be used for further analysis, visualizations, or machine learning tasks.
+Project Structure
+Data Preprocessing: Data cleaning and transformation.
+Performance Analysis: Aggregating scores and accuracy for performance metrics.
+Clustering: Grouping data using K-Means to identify patterns.
+Weakness and Strength Analysis: Identifying weak and strong topics.
+Recommendation Generation: Proposing topics to focus on based on weaknesses.
+Visualization: Radar chart to visualize student performance.
+Setup Instructions
+Prerequisites
+To run the solution, ensure you have Python installed, along with the following dependencies:
 
-Packages Used
-The following Python packages are required to run this project. These packages perform various tasks such as data manipulation, machine learning, and data visualization.
-pandas
-numpy
-scikit-learn
-matplotlib
-seaborn
+bash
+Copy
+Edit
+pip install pandas numpy scikit-learn matplotlib seaborn
+Data Files
+history.csv: Historical quiz performance data.
+current.csv: Latest quiz performance data.
+Make sure these files are in the same directory as the script.
+
+Steps Used in the Code
+1. Data Preprocessing
+The preprocess_data function cleans and prepares the data for further analysis.
+
+ID Cleaning:
+Strips whitespaces and converts Quiz ID and User ID to lowercase.
+Topic Cleaning:
+Converts Quiz Topic or Topic to lowercase.
+Splits concatenated topics (separated by "and") into individual topics.
+Maps each unique topic to a numerical index (Topic_index).
+Score and Accuracy Conversion:
+Converts percentage values (e.g., '85%') to numeric format by removing the '%' sign.
+Handling Missing Data:
+Drops rows where Score or Accuracy is missing.
+python
+Copy
+Edit
+def preprocess_data(df):
+    # Data cleaning steps (stripping, converting to lowercase, splitting topics, etc.)
+    ...
+    return df, index_to_topic
+2. Load Datasets
+The history.csv and current.csv files are read using pandas:
+
+python
+Copy
+Edit
+history_data = pd.read_csv("history.csv")
+current_data = pd.read_csv("current.csv")
+The preprocess_data function is applied to both datasets to clean them.
+
+3. Data Aggregation for Performance Metrics
+Performance metrics for both historical and current quiz data are aggregated.
+
+Historical Performance: Grouped by Topic_index, calculating the mean of Score and Accuracy.
+Current Performance: Grouped by Topic_index, calculating the sum of Correct Answers and Total Questions. Then, Accuracy is computed as the ratio of Correct Answers to Total Questions.
+python
+Copy
+Edit
+history_performance = history_data.groupby("Topic_index").agg({"Score": "mean", "Accuracy": "mean"}).reset_index()
+current_performance = current_data.groupby("Topic_index").agg({"Correct Answers": "sum", "Total Questions": "sum"}).reset_index()
+current_performance["Accuracy"] = current_performance["Correct Answers"] / current_performance["Total Questions"]
+4. Combine Data
+Historical and current performance data are merged into one dataframe using the Topic_index as the key.
+
+python
+Copy
+Edit
+performance_data = pd.merge(history_performance, current_performance, on="Topic_index", how="outer", suffixes=("_history", "_current"))
+5. Normalization
+To standardize the data, we use StandardScaler to scale the Score, Accuracy_history, and Accuracy_current columns.
+
+python
+Copy
+Edit
+scaler = StandardScaler()
+performance_data_scaled = scaler.fit_transform(performance_data[["Score", "Accuracy_history", "Accuracy_current", "Topic_index"]])
+6. Imputation of Missing Data
+After scaling, any missing values are imputed using the mean strategy to handle any NaN values that might remain.
+
+python
+Copy
+Edit
+imputer = SimpleImputer(strategy="mean")
+performance_data_scaled = imputer.fit_transform(performance_data_scaled)
+7. K-Means Clustering
+We use K-Means clustering to group the data into 3 clusters based on the scaled performance data.
+
+python
+Copy
+Edit
+kmeans = KMeans(n_clusters=3, random_state=42)
+performance_data["Cluster"] = kmeans.fit_predict(performance_data_scaled)
+8. Weakness and Strength Analysis
+Weak Topics: Identified by low accuracy or score (less than 0.5).
+Strong Topics: Identified by high accuracy and score (greater than 0.8).
+python
+Copy
+Edit
+weak_topics = performance_data[(performance_data["Accuracy_current"] < 0.5) | (performance_data["Score"] < 0.5)]["Topic_index"].tolist()
+strong_topics = performance_data[(performance_data["Accuracy_current"] > 0.8) & (performance_data["Score"] > 0.8)]["Topic_index"].tolist()
+9. Generate Recommendations
+The recommend_topics function suggests topics to improve based on weak topics.
+
+python
+Copy
+Edit
+def recommend_topics(cluster_data, weakness_list):
+    recommendations = cluster_data[cluster_data["Topic_index"].isin(weakness_list)]
+    return recommendations[["Topic_index", "Accuracy_current"]]
+10. Visualization (Radar Chart)
+A radar chart is created to visualize the performance across different metrics (Score, Accuracy_history, Accuracy_current).
+
+python
+Copy
+Edit
+def plot_radar_chart(data, student_id):
+    categories = ["Score", "Accuracy_history", "Accuracy_current"]
+    values = data.mean()[categories].tolist()
+    values += values[:1]  # Repeat the first value to close the radar chart
+    # Code for plotting the radar chart...
+Conclusion
+This solution provides a personalized recommendation system to help students improve their quiz preparation. The system identifies strengths and weaknesses and suggests relevant topics to focus on, improving performance for future quizzes.
+
