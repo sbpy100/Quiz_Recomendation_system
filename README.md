@@ -1,9 +1,9 @@
  # Personalized Student Recommendations for Quiz Preparation
-Overview
+- Overview
 This Python-based solution analyzes quiz performance data and generates personalized recommendations to help students improve their preparation for exams. The system processes both historical and current quiz data, highlights weaknesses, and provides actionable steps for improvement.
 
-Project Structure
-Data Preprocessing: Data cleaning and transformation.
+# Project Structure
+` Data Preprocessing: Data cleaning and transformation.
 Performance Analysis: Aggregating scores and accuracy for performance metrics.
 Clustering: Grouping data using K-Means to identify patterns.
 Weakness and Strength Analysis: Identifying weak and strong topics.
