@@ -6,9 +6,9 @@ This project provides a Python-based solution to analyze quiz performance and ge
 1 Data Preprocessing: Clean and transform the raw data.
 2.Performance Analysis: Aggregate performance data to derive meaningful metrics.
 3.Clustering: Group data using K-Means clustering.<br>
-4.Weakness and Strength Analysis: Identify areas of improvement and strengths.
-5.Recommendation Generation: Provide personalized suggestions based on weaknesses.
-6.Visualization: Visual representation of student performance through radar charts.
+4.Weakness and Strength Analysis: Identify areas of improvement and strengths..<br>
+5.Recommendation Generation: Provide personalized suggestions based on weaknesses..<br>
+6.Visualization: Visual representation of student performance through radar charts..<br>
 Prerequisites
 To run this project, ensure that you have the following installed:
 
